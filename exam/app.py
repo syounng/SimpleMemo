@@ -49,7 +49,7 @@ def post_memo():
     memo = {'title':title_receive, 'content':content_receive, 'likes': likes}
     db.memos.insert_one(memo)
 
-    return jsonify({'result': 'success', 'msg':'POST 연결되었습니다!'})
+    return jsonify({'result': 'success', 'msg':'메모를 저장했습니다.'})
 
 @app.route('/memos', methods=['DELETE'])
 def delete_memo():
@@ -64,7 +64,7 @@ def delete_memo():
     # 몽고디비에서 삭제
     result = db.memos.delete_one({'_id':object_id})
 
-    return jsonify({'result': 'succes', 'msg':'DELETE 성공'})
+    return jsonify({'result': 'success', 'msg':'메모를 삭제했습니다.'})
 
 @app.route('/memos', methods=['PUT'])
 def put_memo():

@@ -22,7 +22,7 @@
         <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
 
 
-        <title>크래프톤 정글 | 나홀로 메모장</title>
+        <title>Simple Memo</title>
 
         <!-- style -->
         <style type="text/css">
@@ -142,7 +142,7 @@
                     data: {title_give: title, content_give: content},
                     success: function(response){
                         if (response["result"] == "success") {
-                        alert("포스팅 성공!");
+                        alert(response['msg']);
                         window.location.reload(); //페이지 새로고침
                     } else {
                         alert("서버 오류!")
@@ -187,8 +187,8 @@
                     </div>
                     <div class="card-editing card-group">
                         <div>
-                            <input id="new-title" class="form-control" placeholder="${title}">
-                            <input id="new-text" class="form-control" placeholder="${content}">
+                            <input id="new-title" class="form-control" value="${title}">
+                            <input id="new-text" class="form-control" value="${content}">
                         </div>
                         <div>
                             <button onclick="clickSaveButton()" class="save-button btn btn-success" type="button" data-id="${id}">저장</button>
@@ -213,13 +213,17 @@
                             alert(response["msg"]);
                             window.location.reload(); // 페이지 새로고침
                         } else {
-                            alert(response["msg"]);
+                            alert("서버 오류!");
                         }
                     }
                 });
             }
 
             function updateMemo(id, newTitle, newContent) {
+                if(newTitle==="" || newContent===""){
+                    alert('내용을 입력해주세요.');
+                    return;
+                } 
                 $.ajax({
                     type: "PUT",
                     url: "/memos",
@@ -246,7 +250,7 @@
     <body>
         <div class="wrap">
             <div class="jumbotron">
-                <h1 class="display-4">나홀로 메모장 ver2.0</h1>
+                <h1 class="display-4">Simple Memo</h1>
                 <div>
                     <div class="memo-group">
                         <input id="memo-title" class="form-control" placeholder="제목을 입력하세요">
