@@ -81,7 +81,7 @@ def put_memo():
         {'$set': {'title': title_receive, 'content': content_receive}}
     )
 
-    return jsonify({'result': 'succes', 'msg':'EDIT 성공'})
+    return jsonify({'result': 'success', 'msg':'수정이 완료되었습니다.'})
 
 
 if __name__ == '__main__':
