@@ -107,6 +107,10 @@
                 updateLikes(id, afterNum);
             }
 
+            function clickCancleButton(){
+                clickSaveButton();
+            }
+
             function updateLikes(id, likes){
                 $.ajax({
                     type: "PUT",
@@ -192,6 +196,7 @@
                         </div>
                         <div>
                             <button onclick="clickSaveButton()" class="save-button btn btn-success" type="button" data-id="${id}">저장</button>
+                            <button onclick="clickCancleButton()" class="cancle-button btn btn-danger" type="button">취소</button>
                         </div>
                     </div>
                 <div>
@@ -222,8 +227,9 @@
             function updateMemo(id, newTitle, newContent) {
                 if(newTitle==="" || newContent===""){
                     alert('내용을 입력해주세요.');
+                    clickEditButton();
                     return;
-                } 
+                }
                 $.ajax({
                     type: "PUT",
                     url: "/memos",
