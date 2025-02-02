@@ -20,8 +20,8 @@ def home():
 
 @app.route('/memos', methods=['GET'])
 def read_memos():
-    # mongoDB에서 _id 값을 제외한 모든 데이터 조회해오기 (Read)
-    memos = list(db.memos.find({}, {'_id':True, 'title':True, 'content':True}))
+    # mongoDB에서 모든 데이터 조회해오기 (Read)
+    memos = list(db.memos.find({}, {'_id':True, 'title':True, 'content':True, 'likes':True}))
     result = []
 
     # 몽고디비에 저장된 id 값을 문자열로 변환
@@ -38,9 +38,10 @@ def post_memo():
     # 클라이언트로부터 데이터를 받기
     title_receive = request.form['title_give']  
     content_receive = request.form['content_give']  
+    likes = 0
 
     # mongoDB에 데이터를 넣기
-    memo = {'title':title_receive, 'content':content_receive}
+    memo = {'title':title_receive, 'content':content_receive, 'likes': likes}
     db.memos.insert_one(memo)
 
     return jsonify({'result': 'success', 'msg':'POST 연결되었습니다!'})
@@ -82,6 +83,28 @@ def put_memo():
     )
 
     return jsonify({'result': 'success', 'msg':'수정이 완료되었습니다.'})
+
+@app.route('/likes', methods=['PUT'])
+def put_likes():
+    # id 받아오기
+    id_receive = request.form['id_give']
+    likes_receive = request.form['likes_give']
+
+    print('값 받아오기 완료')
+    print('좋아요 수정할 아이디:', id_receive)
+
+    # 받은 id를 objectid로 변환
+    object_id = ObjectId(id_receive)
+    
+    # 몽고디비에서 값을 없데이트
+    result = db.memos.update_one(
+        {'_id': object_id}, 
+        {'$set': {'likes':likes_receive}}
+    )
+
+    return jsonify({'result': 'success', 'msg':'좋아요가 반영되었습니다.'})
+
+
 
 
 if __name__ == '__main__':
