@@ -111,6 +111,16 @@
                 clickSaveButton();
             }
 
+            function clickMemoButton(){
+                $('.memo-title').show();
+                $('.url-title').hide();
+            }
+
+            function clickUrlButton(){
+                $('.memo-title').hide();
+                $('.url-title').show();
+            }
+
             function updateLikes(id, likes){
                 $.ajax({
                     type: "PUT",
@@ -259,7 +269,13 @@
                 <h1 class="display-4">Simple Memo</h1>
                 <div>
                     <div class="memo-group">
-                        <input id="memo-title" class="form-control" placeholder="제목을 입력하세요">
+                        <button onclick="clickMemoButton()" class="btn btn-outline-dark">Memo</button>
+                        <button onclick="clickUrlButton()" class="btn btn-outline-dark">URL</button>
+                    </div>
+
+                    <div class="memo-group">
+                        <input id="memo-title" class="memo-title form-control" placeholder="제목을 입력하세요">
+                        <input id="url-title" class="url-title form-control" style="display:none" placeholder="url을 입력하세요">
                     </div>
                     <div class="memo-group">
                         <textarea id="memo-content" class="form-control" rows="2" placeholder="내용을 입력하세요"></textarea>
