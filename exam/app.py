@@ -47,8 +47,8 @@ def post_memo():
 
 @app.route('/memos', methods=['DELETE'])
 def delete_memo():
-    
-    print('삭제 시작')
+
+    # id 받아오기
     id_receive = request.form['id_give']  
     print('삭제할 아이디:', id_receive)
 
@@ -59,6 +59,30 @@ def delete_memo():
     result = db.memos.delete_one({'_id':object_id})
 
     return jsonify({'result': 'succes', 'msg':'DELETE 성공'})
+
+@app.route('/memos', methods=['PUT'])
+def put_memo():
+    
+    # id 받아오기
+    id_receive = request.form['id_give']  
+    title_receive = request.form['title_give']  
+    content_receive = request.form['content_give']  
+    
+    print('값 받아오기 완료')
+
+    print('수정할 아이디:', id_receive)
+
+    # 받은 id를 objectid로 변환
+    object_id = ObjectId(id_receive)
+
+    # 몽고디비에서 값을 없데이트
+    result = db.memos.update_one(
+        {'_id':object_id}, 
+        {'$set': {'title': title_receive, 'content': content_receive}}
+    )
+
+    return jsonify({'result': 'succes', 'msg':'EDIT 성공'})
+
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5001,debug=True)
