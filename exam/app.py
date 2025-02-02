@@ -24,10 +24,15 @@ def read_memos():
     memos = list(db.memos.find({}, {'_id':True, 'title':True, 'content':True, 'likes':True}))
     result = []
 
-    # 몽고디비에 저장된 id 값을 문자열로 변환
+    # 몽고디비에 저장된 id 값을 문자열로 변환 
+    # 몽고디비에 저장된 likes 값을 정수로 변환 (정렬하기 위해)
     for memo in memos:
         memo['_id'] = str(memo['_id'])
+        memo['likes'] = int(memo['likes'])
         result.append(memo)
+
+    # likes 많은 순으로 정렬
+    result.sort(key=lambda x: -x['likes'])
 
     # memos라는 키 값으로 memo 정보 보내주기
     return jsonify({'result': 'success', 'memos': result})
