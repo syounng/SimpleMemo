@@ -19,6 +19,8 @@ For building and running the application you need:
 - mongodb
 
 ## 💁 Description
+📍 This page was distributed through AWS.
+  
 A website that takes notes of simple content or clipps url.
 1. You can save a simple memo as a title and content. 
 
